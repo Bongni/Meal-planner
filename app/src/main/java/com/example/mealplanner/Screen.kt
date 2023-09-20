@@ -1,7 +1,8 @@
 package com.example.mealplanner
 
 sealed class Screen(val route: String) {
-    object MainScreen : Screen("main_screen")
+    object ShoppingListScreen : Screen("shoppinglist_screen")
+    object RecipeListScreen : Screen("recipelist_screen")
     object RecipeScreen : Screen("recipe_screen")
     object AddScreen : Screen("add_screen")
 

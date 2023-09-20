@@ -62,6 +62,7 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.7.2")
     implementation("com.jjoe64:graphview:4.2.2")
+    implementation("com.google.code.gson:gson:2.8.7")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

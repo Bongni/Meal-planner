@@ -21,8 +21,8 @@ import androidx.navigation.NavController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddScreen (navController: NavController, recipes: LinkedHashMap<String, String>) {
-    var title by remember {
+fun AddScreen (navController: NavController, recipes: ArrayList<Recipe>) {
+    var name by remember {
         mutableStateOf("")
     }
     var recipe by remember {
@@ -35,13 +35,10 @@ fun AddScreen (navController: NavController, recipes: LinkedHashMap<String, Stri
             .fillMaxWidth()
             .padding(horizontal = 50.dp)
     ) {
-        HomeButton(navController = navController)
-        Spacer(modifier = Modifier.height(10.dp))
-
         TextField(
-            value = title,
+            value = name,
             onValueChange = {
-                title = it
+                name = it
             },
             modifier = Modifier.fillMaxWidth()
         )
@@ -60,8 +57,10 @@ fun AddScreen (navController: NavController, recipes: LinkedHashMap<String, Stri
 
         Button (
             onClick = {
-                recipes[title] = recipe
-                navController.navigate(Screen.MainScreen.route)
+                val recipe = Recipe(name, recipe, ArrayList<Ingredient>())
+
+                recipes.add(recipe)
+                navController.navigate(Screen.RecipeListScreen.route)
             },
             modifier = Modifier.fillMaxWidth()
         ) {

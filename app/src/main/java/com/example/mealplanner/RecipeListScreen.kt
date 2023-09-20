@@ -1,11 +1,13 @@
 package com.example.mealplanner
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
@@ -17,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun MainScreen(navController: NavController, recipes: LinkedHashMap<String, String>) {
+fun RecipeListScreen(navController: NavController, recipes: ArrayList<Recipe>, chosenRecipes: ArrayList<Recipe>) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -26,14 +28,10 @@ fun MainScreen(navController: NavController, recipes: LinkedHashMap<String, Stri
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 50.dp)
+                .padding(vertical = 20.dp)
         ) {
-            recipes.forEach { (key, value) ->
-                Row (
-                    modifier = Modifier.fillMaxWidth()
-                ){
-                    RecipeField(title = key, navController = navController)
-                    DeleteButton(key = key, recipes = recipes, navController = navController)
-                }
+            recipes.forEach { recipe ->
+                RecipeBox(recipe = recipe, recipes = recipes, chosenRecipes = chosenRecipes, navController = navController)
             }
         }
 
@@ -51,23 +49,40 @@ fun MainScreen(navController: NavController, recipes: LinkedHashMap<String, Stri
 }
 
 @Composable
-fun RecipeField (title : String, navController: NavController) {
-    Button(
-        onClick = {
-            navController.navigate(Screen.RecipeScreen.withArgs(title))
-        },
-        modifier = Modifier.width(200.dp)
-    ) {
-        Text(text = title)
+fun RecipeBox (recipe: Recipe, recipes: ArrayList<Recipe>, chosenRecipes: ArrayList<Recipe>, navController: NavController) {
+    Row (
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(80.dp)
+            .padding(horizontal = 10.dp)
+            .padding(vertical = 5.dp)
+            .clickable {
+                chosenRecipes.add(recipe)
+            }
+    ){
+        RecipeField(name = recipe.name, navController = navController)
+        DeleteButton(recipe = recipe, recipes = recipes, navController = navController)
     }
 }
 
 @Composable
-fun DeleteButton (key: String, recipes: LinkedHashMap<String, String>, navController: NavController)  {
+fun RecipeField (name : String, navController: NavController) {
     Button(
         onClick = {
-            recipes.remove(key)
-            navController.navigate(Screen.MainScreen.route)
+            navController.navigate(Screen.RecipeScreen.withArgs(name))
+        },
+        modifier = Modifier.width(200.dp)
+    ) {
+        Text(text = name)
+    }
+}
+
+@Composable
+fun DeleteButton (recipe: Recipe, recipes: ArrayList<Recipe>, navController: NavController)  {
+    Button(
+        onClick = {
+            recipes.remove(recipe)
+            navController.navigate(Screen.RecipeListScreen.route)
         },
         modifier = Modifier
     ) {
