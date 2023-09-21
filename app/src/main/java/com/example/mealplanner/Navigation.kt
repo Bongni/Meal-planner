@@ -16,7 +16,7 @@ import androidx.navigation.navArgument
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Navigation(recipes : ArrayList<Recipe>, chosenRecipes : ArrayList<Recipe>) {
+fun Navigation(recipes : ArrayList<Recipe>, ingredients: ArrayList<Ingredient>) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Screen.ShoppingListScreen.route) {
@@ -29,7 +29,7 @@ fun Navigation(recipes : ArrayList<Recipe>, chosenRecipes : ArrayList<Recipe>) {
                     Box(
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        ShoppingListScreen(chosenRecipes = chosenRecipes)
+                        ShoppingListScreen(ingredients = ingredients)
                     }
                 }
             )
@@ -44,7 +44,7 @@ fun Navigation(recipes : ArrayList<Recipe>, chosenRecipes : ArrayList<Recipe>) {
                     Box(
                         modifier = Modifier.padding(innerPadding)
                     ) {
-                        RecipeListScreen(navController = navController, recipes = recipes, chosenRecipes = chosenRecipes)
+                        RecipeListScreen(navController = navController, recipes = recipes, ingredients = ingredients)
                     }
                 }
             )

@@ -12,19 +12,19 @@ import java.io.File
 class MainActivity : ComponentActivity() {
 
     private val recipesFileName = "recipes"
-    private val chosenRecipesFileName = "chosenRecipes"
+    private val ingredientsFileName = "ingredients"
 
     private var recipes = ArrayList<Recipe>()
-    private var chosenRecipes = ArrayList<Recipe>()
+    private var ingredients = ArrayList<Ingredient>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        recipes = readList(recipesFileName, filesDir)
-        chosenRecipes = readList(chosenRecipesFileName, filesDir)
+        recipes = readListRecipe(recipesFileName, filesDir)
+        ingredients = readListIngredient(ingredientsFileName, filesDir)
 
         setContent{
             MealPlannerTheme {
-                Navigation(recipes = recipes, chosenRecipes = chosenRecipes)
+                Navigation(recipes = recipes, ingredients = ingredients)
             }
         }
     }
@@ -32,12 +32,12 @@ class MainActivity : ComponentActivity() {
     override fun onStop() {
         super.onStop()
 
-        writeList(recipesFileName, filesDir, recipes)
-        writeList(chosenRecipesFileName, filesDir, chosenRecipes)
+        writeListRecipe(recipesFileName, filesDir, recipes)
+        writeListIngredient(ingredientsFileName, filesDir, ingredients)
     }
 }
 
-fun readList(address: String, filesDir: File): ArrayList<Recipe> {
+fun readListRecipe(address: String, filesDir: File): ArrayList<Recipe> {
     val file = File(filesDir.absolutePath, address)
 
     if(!file.exists()) {
@@ -50,9 +50,30 @@ fun readList(address: String, filesDir: File): ArrayList<Recipe> {
     return gson.fromJson<ArrayList<Recipe>>(jsonStr, object : TypeToken<ArrayList<Recipe>>(){}.type)
 }
 
-fun writeList(address: String, filesDir: File, list: ArrayList<Recipe>) {
+fun readListIngredient(address: String, filesDir: File): ArrayList<Ingredient> {
+    val file = File(filesDir.absolutePath, address)
+
+    if(!file.exists()) {
+        return ArrayList<Ingredient>()
+    }
+
+    val jsonStr = file.readText()
+
+    val gson = GsonBuilder().create()
+    return gson.fromJson<ArrayList<Ingredient>>(jsonStr, object : TypeToken<ArrayList<Ingredient>>(){}.type)
+}
+
+fun writeListRecipe(address: String, filesDir: File, list: ArrayList<Recipe>) {
     val gson = Gson()
     val json = gson.toJson(list, object : TypeToken<ArrayList<Recipe>>(){}.type)
+
+    val file = File(filesDir.absolutePath, address)
+    file.writeText(json.toString())
+}
+
+fun writeListIngredient(address: String, filesDir: File, list: ArrayList<Ingredient>) {
+    val gson = Gson()
+    val json = gson.toJson(list, object : TypeToken<ArrayList<Ingredient>>(){}.type)
 
     val file = File(filesDir.absolutePath, address)
     file.writeText(json.toString())
