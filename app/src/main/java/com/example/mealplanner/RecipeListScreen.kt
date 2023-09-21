@@ -51,11 +51,10 @@ fun RecipeListScreen(navController: NavController, recipes: ArrayList<Recipe>, i
             contentPadding = PaddingValues(vertical = 12.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            itemsIndexed(
-                items = recipes,
-                key = {_, item -> item.id}
-            ) {_, recipe ->
-                IngredientItem(
+            items(recipes.size) {index ->
+                val recipe = recipes[index]
+
+                RecipeItem(
                     recipe = recipe,
                     onRemove = {recipe -> recipes.remove(recipe)},
                     onAdd = {recipe -> addIngredients(ingredients, recipe)},
@@ -79,7 +78,7 @@ fun RecipeListScreen(navController: NavController, recipes: ArrayList<Recipe>, i
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun IngredientItem (
+fun RecipeItem (
     recipe: Recipe,
     onRemove: (Recipe) -> Boolean,
     onAdd: (Recipe) -> Boolean,

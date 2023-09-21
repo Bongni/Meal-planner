@@ -70,7 +70,8 @@ fun RowScope.AddItem(
                 imageVector = screen.icon,
                 contentDescription = screen.title,
             )
-        })
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,5 +91,6 @@ fun TopNavBarSmall (navController: NavController, title: String) {
         },
         colors = TopAppBarDefaults.smallTopAppBarColors(
 
-        ))
+        )
+    )
 }

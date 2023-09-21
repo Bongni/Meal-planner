@@ -59,7 +59,7 @@ fun Navigation(recipes : ArrayList<Recipe>, ingredients: ArrayList<Ingredient>) 
                 }
             )
         ) { entry ->
-            val title = entry.arguments?.getString("title")!!
+            val name = entry.arguments?.getString("title")!!
 
             Scaffold (
                 topBar = {
@@ -69,9 +69,12 @@ fun Navigation(recipes : ArrayList<Recipe>, ingredients: ArrayList<Ingredient>) 
                     Box (
                         modifier = Modifier.padding(innerPadding)
                     ) {
+                        val recipe = getRecipeWhereName(name, recipes)
+
                         RecipeScreen(
-                            title = title,
-                            ingredients = "some"
+                            title = recipe.name,
+                            recipe = recipe.recipe,
+                            ingredients = recipe.ingredients
                         )
                     }
                 }

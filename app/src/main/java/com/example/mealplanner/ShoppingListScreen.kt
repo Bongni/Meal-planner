@@ -45,10 +45,9 @@ fun ShoppingListScreen (ingredients: ArrayList<Ingredient>) {
             contentPadding = PaddingValues(vertical = 12.dp),
             modifier = Modifier.fillMaxSize()
         ) {
-            itemsIndexed(
-                items = ingredients,
-                key = { _, item -> item.id }
-            ) { _, ingredient ->
+            items(ingredients.size) {index ->
+                val ingredient = ingredients[index]
+
                 IngredientItem(
                     ingredient = ingredient,
                     onRemove = { ingredient ->
