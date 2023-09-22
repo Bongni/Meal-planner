@@ -14,14 +14,6 @@ data class Recipe (var name: String, var recipe: String, var ingredients: ArrayL
     }
 }
 
-data class Ingredient (var name: String, var amount: Int, var unit: Unit) {
-    val id: Int get() = hashCode()
-}
-
-enum class Unit {
-    G, L, EL, KL
-}
-
 fun getRecipeWhereName(name: String, recipes: ArrayList<Recipe>): Recipe {
     for(recipe in recipes) {
         if (name == recipe.name) return recipe

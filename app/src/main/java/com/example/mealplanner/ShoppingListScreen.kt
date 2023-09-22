@@ -9,10 +9,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissState
 import androidx.compose.material.DismissValue
@@ -39,11 +40,14 @@ import kotlinx.coroutines.delay
 @Composable
 fun ShoppingListScreen (ingredients: ArrayList<Ingredient>) {
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         LazyColumn(
             contentPadding = PaddingValues(vertical = 12.dp),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 20.dp)
         ) {
             items(ingredients.size) {index ->
                 val ingredient = ingredients[index]
@@ -93,6 +97,7 @@ fun IngredientItem (
                 Ingredient(ingredient = ingredient)
             },
             modifier = Modifier
+                .fillMaxSize()
         )
     }
 

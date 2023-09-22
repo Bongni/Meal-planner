@@ -13,9 +13,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissState
 import androidx.compose.material.DismissValue
@@ -45,11 +47,14 @@ import kotlinx.coroutines.delay
 @Composable
 fun RecipeListScreen(navController: NavController, recipes: ArrayList<Recipe>, ingredients: ArrayList<Ingredient>) {
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp)
     ) {
         LazyColumn(
             contentPadding = PaddingValues(vertical = 12.dp),
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
         ) {
             items(recipes.size) {index ->
                 val recipe = recipes[index]
@@ -138,12 +143,20 @@ fun RecipeItem (
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeField (recipe : Recipe) {
-    ListItem(
-        headlineText = {
-                       Text(recipe.name, style = MaterialTheme.typography.titleMedium)
-        },
-        modifier = Modifier.clip(MaterialTheme.shapes.small)
-    )
+    Surface (
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        shape = RoundedCornerShape(8.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = 5.dp)
+    ) {
+        Text(
+            text = recipe.name,
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .padding(25.dp, 13.dp)
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
